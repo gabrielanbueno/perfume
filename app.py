@@ -48,13 +48,15 @@ def detalhe_perfume(id):
 def adicionar():
     if request.method == "POST":
         nome = request.form["nome"]
+        marca = request.form["marca"]
         tipo = request.form["tipo"]
         preco = request.form["preco"]
         descricao = request.form["descricao"]
+        imagem = request.form["imagem"]
         
         conn = get_db_connection()
         conn.execute(
-            "INSERT INTO perfumes (nome, tipo, preco, descricao) VALUES (?, ?, ?, ?)", (nome, tipo, preco, descricao)
+            "INSERT INTO perfumes (nome, marca, tipo, preco, descricao, imagem) VALUES (?, ?, ?, ?, ?, ?)", (nome, marca, tipo, preco, descricao, imagem)
         )
         conn.commit()
         conn.close()
