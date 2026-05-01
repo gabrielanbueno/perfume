@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Encontre seu perfume cítrico perfeito</h2>
+
+<form class="filtro" method="get">
+    <select name="Tipo">
+        <option value="">Tipo</option>
+        <option value="citrico">Citrico</option>
+        <option value="fresco">Fresco</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+        <option value="unissex">Unissex</option>
+    </select>
+
+    <input type="number" name="preco_min" placeholder="Preço Mínimo">
+    <button type="submit">Filtrar</button>
+  
+</form>
+
+<!-- Botão fora no "form" senão dá pau -->
+<a href="/adicionar">
+    <button type="button">+ Adicionar perfume</button>
+</a>
+
+<!--Lista dos perfumes-->
+<div class="grid">
+    {% for perfume in perfumes %}
+    <div class="card">
+        <img src="https://source.unsplash.com/300x200/?perfume" alt="perfume">
+        <h3>{{ perfume.nome }}</h3>
+        <p>{{ perfume.descricao }}</p>
+        <p><strong>Preço:</strong> R$ {{ perfume.preco }}</p>
+        
+        <!-- Botão de detalhes-->
+    <a href="{{ url_for('detalhe_perfume', id=perfume.id)}}">
+        <button type="button">Mais detalhes</button>
+    </a>
+
+    <!--Delete-->
+    <a href="{{url_for('deletar', id=perfume.id)}}">
+        <button type="button">Excluir</button>
+    </a>
+
+    </div> 
+    {%endfor%}
+</div>
+{% endblock %}
