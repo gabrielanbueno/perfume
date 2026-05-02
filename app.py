@@ -13,7 +13,7 @@ def get_db_connection():
 # Escopo principal
 @app.route("/")
 def index():
-    tipo = request.args.get("Tipo")
+    tipo = request.args.get("tipo")
     preco_min = request.args.get("preco_min")
     
     conn = get_db_connection()
