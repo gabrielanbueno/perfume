@@ -1,41 +1,54 @@
-import sqlite3
+﻿import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
 
-#criação da aplocação 
 app = Flask(__name__)
 
-#função auxiliar com o banco de dados
+
 def get_db_connection():
     conn = sqlite3.connect("perfumes.db")
     conn.row_factory = sqlite3.Row
     return conn
 
-# Escopo principal
+
+def garantir_colunas():
+    conn = get_db_connection()
+    colunas = conn.execute("PRAGMA table_info(perfumes)").fetchall()
+    nomes_colunas = [coluna["name"] for coluna in colunas]
+
+    if "link_compra" not in nomes_colunas:
+        conn.execute("ALTER TABLE perfumes ADD COLUMN link_compra TEXT")
+        conn.commit()
+
+    conn.close()
+
+
 @app.route("/")
 def index():
+    garantir_colunas()
     tipo = request.args.get("tipo")
     preco_min = request.args.get("preco_min")
-    
+
     conn = get_db_connection()
-    
+
     query = "SELECT * FROM perfumes WHERE 1=1"
     parametros = []
-    
+
     if tipo:
         query += " AND tipo = ?"
         parametros.append(tipo)
-        
+
     if preco_min:
         query += " AND preco >= ?"
         parametros.append(preco_min)
-        
+
     perfumes = conn.execute(query, parametros).fetchall()
     conn.close()
     return render_template("index.html", perfumes=perfumes)
 
-# Novo escopo
+
 @app.route("/perfume/<int:id>")
 def detalhe_perfume(id):
+    garantir_colunas()
     conn = get_db_connection()
     perfume = conn.execute(
         "SELECT * FROM perfumes WHERE id = ?", (id,)
@@ -43,9 +56,10 @@ def detalhe_perfume(id):
     conn.close()
     return render_template("perfume.html", perfume=perfume)
 
-#Escopo (pós) database
+
 @app.route("/adicionar", methods=["GET", "POST"])
 def adicionar():
+    garantir_colunas()
     if request.method == "POST":
         nome = request.form["nome"]
         marca = request.form["marca"]
@@ -53,18 +67,23 @@ def adicionar():
         preco = request.form["preco"]
         descricao = request.form["descricao"]
         imagem = request.form["imagem"]
-        
+        link_compra = request.form["link_compra"]
+
         conn = get_db_connection()
         conn.execute(
-            "INSERT INTO perfumes (nome, marca, tipo, preco, descricao, imagem) VALUES (?, ?, ?, ?, ?, ?)", (nome, marca, tipo, preco, descricao, imagem)
+            """
+            INSERT INTO perfumes (nome, marca, tipo, preco, descricao, imagem, link_compra)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (nome, marca, tipo, preco, descricao, imagem, link_compra)
         )
         conn.commit()
         conn.close()
-        
+
         return redirect(url_for("index"))
     return render_template("adicionar.html")
 
-#Deletar
+
 @app.route("/deletar/<int:id>")
 def deletar(id):
     conn = get_db_connection()
@@ -72,6 +91,7 @@ def deletar(id):
     conn.commit()
     conn.close()
     return redirect(url_for("index"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

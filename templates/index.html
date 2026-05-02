@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block content %}
 
@@ -28,13 +28,13 @@
         <div class="card">
 
             {% if perfume.imagem %}
-                <img 
-                    src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}" 
+                <img
+                    src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
                     alt="{{ perfume.nome }}"
                 >
             {% else %}
-                <img 
-                    src="{{ url_for('static', filename='imagens/padrao.jpg') }}" 
+                <img
+                    src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
                     alt="Imagem padrão"
                 >
             {% endif %}
@@ -42,19 +42,22 @@
             <h3>{{ perfume.nome }}</h3>
 
             <p><strong>Marca:</strong> {{ perfume.marca }}</p>
-
             <p><strong>Tipo:</strong> {{ perfume.tipo }}</p>
-
             <p>{{ perfume.descricao }}</p>
-
             <p><strong>Preço:</strong> R$ {{ perfume.preco }}</p>
+
+            {% if perfume.link_compra %}
+                <a href="{{ perfume.link_compra }}" target="_blank" rel="noopener noreferrer">
+                    <button type="button" class="botao-compra">Comprar no Mercado Livre</button>
+                </a>
+            {% endif %}
 
             <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
                 <button type="button">Mais detalhes</button>
             </a>
 
             <a href="{{ url_for('deletar', id=perfume.id) }}">
-                <button type="button">Excluir</button>
+                <button type="button" class="botao-excluir">Excluir</button>
             </a>
 
         </div>

@@ -1,40 +1,50 @@
-/* Reset básico */
-body {
+﻿body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #0f172a, #1e293b);
     color: #f1f5f9;
 }
 
-/* Container geral */
 .container {
     max-width: 1100px;
     margin: auto;
     padding: 20px;
 }
 
-/* Título */
 h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Formulário */
-.filtro {
+.filtro,
+.formulario {
     display: flex;
     gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
 }
 
+.formulario {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+}
+
 .filtro select,
-.filtro input {
+.filtro input,
+.formulario input,
+.formulario textarea {
     padding: 10px;
     border-radius: 8px;
     border: none;
 }
 
-/* Botões */
+.formulario textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
 button {
     padding: 10px 15px;
     border: none;
@@ -49,14 +59,31 @@ button:hover {
     background: #16a34a;
 }
 
-/* Grid */
+.botao-compra {
+    display: inline-block;
+    margin-bottom: 8px;
+    background: #f59e0b;
+}
+
+.botao-compra:hover {
+    background: #d97706;
+}
+
+.botao-excluir {
+    background: #ef4444;
+}
+
+.botao-excluir:hover {
+    background: #dc2626;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
+    margin-top: 20px;
 }
 
-/* Card */
 .card {
     background: #1e293b;
     border-radius: 16px;
@@ -69,18 +96,37 @@ button:hover {
     transform: translateY(-5px);
 }
 
-/* Imagem */
 .card img {
     width: 100%;
     border-radius: 12px;
     margin-bottom: 10px;
 }
 
-/* Links */
 a {
     text-decoration: none;
 }
-/* HEADER */
+
+.link-voltar {
+    display: inline-block;
+    margin-top: 16px;
+    color: #22c55e;
+}
+
+.detalhe {
+    display: grid;
+    grid-template-columns: minmax(240px, 380px) 1fr;
+    gap: 30px;
+    align-items: start;
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.detalhe img {
+    width: 100%;
+    border-radius: 12px;
+}
+
 .header {
     text-align: center;
     padding: 40px 20px;
@@ -98,10 +144,22 @@ a {
     margin-top: 10px;
     color: #94a3b8;
 }
+
 footer {
     text-align: center;
     padding: 20px;
     margin-top: 40px;
     color: #94a3b8;
     border-top: 1px solid #334155;
+}
+
+@media (max-width: 700px) {
+    .filtro,
+    .detalhe {
+        grid-template-columns: 1fr;
+    }
+
+    .filtro {
+        flex-direction: column;
+    }
 }

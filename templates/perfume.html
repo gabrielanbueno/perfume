@@ -1,0 +1,35 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+{% if perfume %}
+    <section class="detalhe">
+        {% if perfume.imagem %}
+            <img
+                src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
+                alt="{{ perfume.nome }}"
+            >
+        {% endif %}
+
+        <div>
+            <h2>{{ perfume.nome }}</h2>
+            <p><strong>Marca:</strong> {{ perfume.marca }}</p>
+            <p><strong>Tipo:</strong> {{ perfume.tipo }}</p>
+            <p><strong>Preço:</strong> R$ {{ perfume.preco }}</p>
+            <p>{{ perfume.descricao }}</p>
+
+            {% if perfume.link_compra %}
+                <a href="{{ perfume.link_compra }}" target="_blank" rel="noopener noreferrer">
+                    <button type="button" class="botao-compra">Comprar no Mercado Livre</button>
+                </a>
+            {% endif %}
+
+            <a href="{{ url_for('index') }}" class="link-voltar">Voltar</a>
+        </div>
+    </section>
+{% else %}
+    <p>Perfume não encontrado.</p>
+    <a href="{{ url_for('index') }}" class="link-voltar">Voltar</a>
+{% endif %}
+
+{% endblock %}
