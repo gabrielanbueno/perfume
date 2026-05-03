@@ -19,48 +19,55 @@
     <button type="submit">Filtrar</button>
 </form>
 
-<a href="{{ url_for('adicionar') }}">
+<a href="{{ url_for('adicionar') }}" class="link-adicionar">
     <button type="button">+ Adicionar perfume</button>
 </a>
 
 <div class="grid">
     {% for perfume in perfumes %}
-        <div class="card">
+        <article class="card">
+            <div class="card-imagem">
+                {% if perfume.imagem %}
+                    <img
+                        src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
+                        alt="{{ perfume.nome }}"
+                    >
+                {% else %}
+                    <img
+                        src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
+                        alt="Imagem padrão"
+                    >
+                {% endif %}
+            </div>
 
-            {% if perfume.imagem %}
-                <img
-                    src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
-                    alt="{{ perfume.nome }}"
-                >
-            {% else %}
-                <img
-                    src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
-                    alt="Imagem padrão"
-                >
-            {% endif %}
+            <div class="card-conteudo">
+                <span class="categoria">{{ perfume.tipo }}</span>
 
-            <h3>{{ perfume.nome }}</h3>
+                <h3>{{ perfume.nome }}</h3>
 
-            <p><strong>Marca:</strong> {{ perfume.marca }}</p>
-            <p><strong>Tipo:</strong> {{ perfume.tipo }}</p>
-            <p>{{ perfume.descricao }}</p>
-            <p><strong>Preço:</strong> R$ {{ perfume.preco }}</p>
+                <p class="marca">{{ perfume.marca }}</p>
 
-            {% if perfume.link_compra %}
-                <a href="{{ perfume.link_compra }}" target="_blank" rel="noopener noreferrer">
-                    <button type="button" class="botao-compra">Comprar no Mercado Livre</button>
+                <p class="descricao">{{ perfume.descricao }}</p>
+
+                <div class="card-rodape">
+                    <p class="preco">R$ {{ perfume.preco }}</p>
+
+                    <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
+                        <button type="button">Mais detalhes</button>
+                    </a>
+                </div>
+
+                {% if perfume.link_compra %}
+                    <a href="{{ perfume.link_compra }}" target="_blank" rel="noopener noreferrer">
+                        <button type="button" class="botao-compra">Comprar no Mercado Livre</button>
+                    </a>
+                {% endif %}
+
+                <a href="{{ url_for('deletar', id=perfume.id) }}">
+                    <button type="button" class="botao-excluir">Excluir</button>
                 </a>
-            {% endif %}
-
-            <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
-                <button type="button">Mais detalhes</button>
-            </a>
-
-            <a href="{{ url_for('deletar', id=perfume.id) }}">
-                <button type="button" class="botao-excluir">Excluir</button>
-            </a>
-
-        </div>
+            </div>
+        </article>
     {% else %}
         <p>Nenhum perfume cadastrado ainda.</p>
     {% endfor %}
