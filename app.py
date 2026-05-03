@@ -114,3 +114,58 @@ def deletar(id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar(id):
+    garantir_colunas()
+
+    conn = get_db_connection()
+    perfume = conn.execute(
+        "SELECT * FROM perfumes WHERE id = ?", (id,)
+    ).fetchone()
+
+    if perfume is None:
+        conn.close()
+        return redirect(url_for("index"))
+
+    if request.method == "POST":
+        nome = request.form["nome"]
+        marca = request.form["marca"]
+        tipo = request.form["tipo"]
+        preco = request.form["preco"]
+        descricao = request.form["descricao"]
+        imagem = request.form["imagem"]
+        link_compra = request.form["link_compra"]
+        ocasiao = request.form["ocasiao"]
+        fixacao = request.form["fixacao"]
+        projecao = request.form["projecao"]
+        notas = request.form["notas"]
+
+        conn.execute(
+            """
+            UPDATE perfumes
+            SET nome = ?,
+                marca = ?,
+                tipo = ?,
+                preco = ?,
+                descricao = ?,
+                imagem = ?,
+                link_compra = ?,
+                ocasiao = ?,
+                fixacao = ?,
+                projecao = ?,
+                notas = ?
+            WHERE id = ?
+            """,
+            (
+                nome, marca, tipo, preco, descricao, imagem,
+                link_compra, ocasiao, fixacao, projecao, notas, id
+            )
+        )
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("detalhe_perfume", id=id))
+
+    conn.close()
+    return render_template("editar.html", perfume=perfume)

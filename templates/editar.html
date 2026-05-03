@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Editar perfume</h2>
+
+<form class="formulario" method="post">
+    <div class="form-grid">
+        <input type="text" name="nome" placeholder="Nome" value="{{ perfume.nome }}" required>
+
+        <input type="text" name="marca" placeholder="Marca" value="{{ perfume.marca }}" required>
+
+        <input type="text" name="tipo" placeholder="Tipo" value="{{ perfume.tipo or '' }}">
+
+        <input type="number" name="preco" placeholder="Preço" step="0.01" value="{{ perfume.preco or '' }}">
+
+        <input type="text" name="ocasiao" placeholder="Ocasião" value="{{ perfume.ocasiao or '' }}">
+
+        <input type="text" name="fixacao" placeholder="Fixação" value="{{ perfume.fixacao or '' }}">
+
+        <input type="text" name="projecao" placeholder="Projeção" value="{{ perfume.projecao or '' }}">
+
+        <input type="text" name="imagem" placeholder="Imagem" value="{{ perfume.imagem or '' }}">
+    </div>
+
+    <textarea name="descricao" placeholder="Descrição">{{ perfume.descricao or '' }}</textarea>
+
+    <textarea name="notas" placeholder="Notas olfativas">{{ perfume.notas or '' }}</textarea>
+
+    <input type="url" name="link_compra" placeholder="Link afiliado do Mercado Livre" value="{{ perfume.link_compra or '' }}">
+
+    <button type="submit">Salvar alterações</button>
+</form>
+
+<a href="{{ url_for('detalhe_perfume', id=perfume.id) }}" class="link-voltar">
+    Voltar para detalhes
+</a>
+
+{% endblock %}

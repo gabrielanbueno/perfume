@@ -67,6 +67,12 @@
                     <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
                         <button type="button">Mais detalhes</button>
                     </a>
+
+                    <a href="{{ url_for('editar', id=perfume.id) }}">
+                        <button type="button">Editar</button>
+                    </a>
+
+
                 </div>
 
                 {% if perfume.link_compra %}
