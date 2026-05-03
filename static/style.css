@@ -251,9 +251,10 @@ button:hover {
 
 .preco {
     margin: 0;
-    color: var(--ink);
+    color: var(--brand-dark);
     font-size: 18px;
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .vitrine-topo{
@@ -474,6 +475,15 @@ footer {
 
     .detalhe-info {
         grid-template-columns: 1fr;
+    }
+
+    .card-rodape {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-rodape bottom {
+        width: 100%;
     }
 
 
