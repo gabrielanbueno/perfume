@@ -103,18 +103,6 @@ def adicionar():
         return redirect(url_for("index"))
     return render_template("adicionar.html")
 
-@app.route("/deletar/<int:id>")
-def deletar(id):
-    conn = get_db_connection()
-    conn.execute("DELETE FROM perfumes WHERE id = ?", (id,))
-    conn.commit()
-    conn.close()
-    return redirect(url_for("index"))
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
 def editar(id):
     garantir_colunas()
@@ -169,3 +157,17 @@ def editar(id):
 
     conn.close()
     return render_template("editar.html", perfume=perfume)
+
+@app.route("/deletar/<int:id>")
+def deletar(id):
+    conn = get_db_connection()
+    conn.execute("DELETE FROM perfumes WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("index"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
