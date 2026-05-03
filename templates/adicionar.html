@@ -5,54 +5,33 @@
 <h2>Adicionar novo perfume</h2>
 
 <form class="formulario" method="post">
-    <input type="text" name="nome" placeholder="Nome" required>
+    <div class="form-grid">
+        <input type="text" name="nome" placeholder="Nome" required>
 
-    <input type="text" name="marca" placeholder="Marca" required>
+        <input type="text" name="marca" placeholder="Marca" required>
 
-    <input type="text" name="tipo" placeholder="Tipo (ex: cítrico, fresco, unissex)">
+        <input type="text" name="tipo" placeholder="Tipo (ex: cítrico, fresco, unissex)">
 
-    <input type="number" name="preco" placeholder="Preço" step="0.01">
+        <input type="number" name="preco" placeholder="Preço" step="0.01">
+
+        <input type="text" name="ocasiao" placeholder="Ocasião (ex: dia a dia, trabalho, calor)">
+
+        <input type="text" name="fixacao" placeholder="Fixação (ex: suave, moderada, intensa)">
+
+        <input type="text" name="projecao" placeholder="Projeção (ex: discreta, moderada, marcante)">
+
+        <input type="text" name="imagem" placeholder="Imagem (ex: acqua_di_gio.jpg)">
+    </div>
 
     <textarea name="descricao" placeholder="Descrição"></textarea>
 
-    <input
-        type="text"
-        name="notas"
-        placeholder="Notas olfativas (ex: bergamota, limão, musk)"
-    >
+    <textarea name="notas" placeholder="Notas olfativas (ex: bergamota, limão, musk)"></textarea>
 
-    <input
-        type="text"
-        name="ocasiao"
-        placeholder="Ocasião (ex: dia a dia, trabalho, calor)"
-    >
+    <input type="url" name="link_compra" placeholder="Link afiliado do Mercado Livre">
 
-    <input
-        type="text"
-        name="fixacao"
-        placeholder="Fixação (ex: suave, moderada, intensa)"
-    >
-
-    <input
-        type="text"
-        name="projecao"
-        placeholder="Projeção (ex: discreta, moderada, marcante)"
-    >
-
-    <input
-        type="text"
-        name="imagem"
-        placeholder="Imagem (ex: acqua_di_gio.jpg)"
-    >
-
-    <input
-        type="url"
-        name="link_compra"
-        placeholder="Link afiliado do Mercado Livre"
-    >
-
-    <button type="submit">Salvar</button>
+    <button type="submit">Salvar perfume</button>
 </form>
+
 
 <a href="{{ url_for('index') }}" class="link-voltar">Voltar</a>
 
