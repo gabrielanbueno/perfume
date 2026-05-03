@@ -233,6 +233,29 @@ button:hover {
     margin-top: auto;
 }
 
+.card-conteudo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px;
+}
+
+.card-rodape {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 18px;
+}
+
+.preco {
+    margin: 0;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 800;
+}
+
 .vitrine-topo{
     display: flex;
     gap: 24px;
@@ -388,6 +411,7 @@ a {
     overflow: hidden;
     color: var(--muted);
     line-height: 1.55;
+    line-clamp: 4;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
