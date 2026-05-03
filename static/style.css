@@ -18,7 +18,7 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background: var(--bg);
     color: var(--ink);
 }
@@ -35,18 +35,37 @@ body {
     border-bottom: 5px solid var(--accent);
 }
 
+.hero{
+    max-width: 760px;;
+}
+
+.tagline {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 250, 243, 0.45);
+    border-radius: 999px;
+    color: #fffaf3;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .header h1 {
     margin: 0;
-    font-size: 42px;
-    line-height: 1.1;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 58px;
+    line-height: 1.05;
     font-weight: 800;
 }
 
 .header p {
-    max-width: 560px;
-    margin: 12px 0 0;
+    max-width: 640px;
+    margin: 16px 0 0;
     color: #fff3e3;
     font-size: 18px;
+    line-height: 1.7;
 }
 
 main.container {
