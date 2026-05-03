@@ -58,7 +58,11 @@
                 <p class="descricao">{{ perfume.descricao }}</p>
 
                 <div class="card-rodape">
-                    <p class="preco">R$ {{ perfume.preco }}</p>
+                    {% if perfume.preco %}
+                        <p class="preco">R$ {{ "%.2f"|format(perfume.preco)|replace(".", ",") }}</p>
+                    {% else %}
+                        <p class="preco">Consultar</p>
+                    {% endif %}
 
                     <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
                         <button type="button">Mais detalhes</button>
