@@ -93,6 +93,7 @@ h2 {
 .filtro {
     grid-template-columns: minmax(180px, 240px) minmax(180px, 240px) auto;
     align-items: center;
+    width: fit-content;
 }
 
 .formulario {
@@ -108,7 +109,7 @@ h2 {
     width: 100%;
     padding: 12px 13px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 999px;
     background: #ffffff;
     color: var(--ink);
     font-size: 15px;
@@ -126,24 +127,26 @@ h2 {
 .formulario textarea {
     min-height: 120px;
     resize: vertical;
+    border-radius: 14px;
 }
 
 button {
     min-height: 44px;
-    padding: 0 16px;
+    padding: 0 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     background: var(--brand);
     color: #ffffff;
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
     background: var(--brand-dark);
     transform: translateY(-1px);
+    box-shadow: 0 8px rgba(63, 47, 37, 0.16);
 }
 
 .botao-compra {
@@ -155,6 +158,7 @@ button:hover {
 
 .botao-compra:hover {
     background: #dda136;
+    box-shadow: 0 8px rgba(63, 47, 37, 0.16);
 }
 
 .botao-excluir {
