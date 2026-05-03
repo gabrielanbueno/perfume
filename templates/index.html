@@ -31,10 +31,6 @@
     <button type="submit">Filtrar</button>
 </form>
 
-<a href="{{ url_for('adicionar') }}" class="link-adicionar">
-    <button type="button">+ Adicionar perfume</button>
-</a>
-
 <div class="grid">
     {% for perfume in perfumes %}
         <article class="card">
