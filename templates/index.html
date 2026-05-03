@@ -64,15 +64,16 @@
                         <p class="preco">Consultar</p>
                     {% endif %}
 
-                    <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
-                        <button type="button">Mais detalhes</button>
-                    </a>
+                    <div class="card-acoes">
+                        <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
+                            <button type="button">Mais detalhes</button>
+                        </a>
+                        </a>
 
-                    <a href="{{ url_for('editar', id=perfume.id) }}">
-                        <button type="button">Editar</button>
-                    </a>
-
-
+                        <a href="{{ url_for('editar', id=perfume.id) }}">
+                            <button type="button">Editar</button>
+                        </a>
+                    </div>
                 </div>
 
                 {% if perfume.link_compra %}

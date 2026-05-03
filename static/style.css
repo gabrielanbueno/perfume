@@ -253,12 +253,22 @@ button:hover {
 }
 
 .card-rodape {
-    display: flex;
+    display: grid;
     gap: 12px;
-    align-items: center;
-    justify-content: space-between;
     margin-top: auto;
     padding-top: 18px;
+}
+
+.card-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.card-acoes button {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .preco {
