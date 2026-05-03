@@ -2,7 +2,19 @@
 
 {% block content %}
 
-<h2>Encontre seu perfume cítrico perfeito</h2>
+<section class="vitrine-topo">
+    <div>
+        <span class="secao-label">Vitrine</span>
+        <h2>Encontre seu perfume cítrico perfeito</h2>
+        <p>
+            Filtre fragâncias por estilo e faixa de preço para descobrir opções leves, elegantes e fáceis de usar no dia a dia.
+        </p>
+    </div>
+
+    <a href="{{ url_for('adicionar') }}" class="link-adicionar">
+        <button type="button">+ Adicionar perfume</button>
+    </a>
+</section>
 
 <form class="filtro" method="get">
     <select name="tipo">
