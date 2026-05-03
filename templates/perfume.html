@@ -32,7 +32,11 @@
         <div class="detalhe-info">
             <div>
                 <span>Preço médio</span>
-                <strong>R$ {{ perfume.preco or "Consultar" }}</strong>
+                {% if perfume.preco %}
+                <strong>R$ {{ "%.2f"|format(perfume.preco)|replace(".", ",") }}</strong>
+                {% else %}
+                <strong>Consultar</strong>
+                {% endif %}
             </div>
 
             <div>

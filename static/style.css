@@ -334,7 +334,7 @@ a {
 
 .detalhe-info {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     margin-top: 26px;
 }
@@ -381,6 +381,15 @@ a {
     margin: 0;
     color: var(--ink);
     line-height: 1.7;
+}
+
+.descricao{
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--muted);
+    line-height: 1.55;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 footer {
