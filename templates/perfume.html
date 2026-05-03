@@ -1,69 +1,91 @@
-﻿{% extends "base.html" %} {% block content %} {% if perfume %}
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+{% if perfume %}
 <section class="detalhe-perfume">
-  <div class="detalhe-imagem">
-    {% if perfume.imagem %}
-    <img
-      src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
-      alt="{{ perfume.nome }}"
-    />
-    {% else %}
-    <img
-      src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
-      alt="Imagem padrão"
-    />
-    {% endif %}
-  </div>
-
-  <div class="detalhe-conteudo">
-    <span class="categoria">{{ perfume.tipo }}</span>
-
-    <h2>{{ perfume.nome }}</h2>
-
-    <p class="detalhe-marca">{{ perfume.marca }}</p>
-
-    <p class="detalhe-descricao">{{ perfume.descricao }}</p>
-
-    <div class="detalhe-info">
-      <div>
-        <span>Preço médio</span>
-        <strong>R$ {{ perfume.preco }}</strong>
-      </div>
-
-      <div>
-        <span>Estilo</span>
-        <strong>{{ perfume.tipo }}</strong>
-      </div>
-
-      <div>
-        <span>Ocasião</span>
-        <strong>Dia a dia</strong>
-      </div>
-
-      <div>
-        <span>Fixação</span>
-        <strong>Moderada</strong>
-      </div>
+    <div class="detalhe-imagem">
+        {% if perfume.imagem %}
+            <img
+                src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
+                alt="{{ perfume.nome }}"
+            >
+        {% else %}
+            <img
+                src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
+                alt="Imagem padrão"
+            >
+        {% endif %}
     </div>
 
-    {% if perfume.link_compra %}
-    <a
-      href="{{ perfume.link_compra }}"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <button type="button" class="botao-compra">
-        Comprar no Mercado Livre
-      </button>
-    </a>
-    {% endif %}
+    <div class="detalhe-conteudo">
+        <span class="categoria">{{ perfume.tipo or "Perfume" }}</span>
 
-    <a href="{{ url_for('index') }}" class="link-voltar">
-      Voltar para a vitrine
-    </a>
-  </div>
+        <h2>{{ perfume.nome }}</h2>
+
+        <p class="detalhe-marca">{{ perfume.marca }}</p>
+
+        <p class="detalhe-descricao">
+            {{ perfume.descricao or "Descrição não informada." }}
+        </p>
+
+        <div class="detalhe-info">
+            <div>
+                <span>Preço médio</span>
+                <strong>R$ {{ perfume.preco or "Consultar" }}</strong>
+            </div>
+
+            <div>
+                <span>Estilo</span>
+                <strong>{{ perfume.tipo or "Não informado" }}</strong>
+            </div>
+
+            <div>
+                <span>Ocasião</span>
+                <strong>{{ perfume.ocasiao or "Não informado" }}</strong>
+            </div>
+
+            <div>
+                <span>Fixação</span>
+                <strong>{{ perfume.fixacao or "Não informado" }}</strong>
+            </div>
+
+            <div>
+                <span>Projeção</span>
+                <strong>{{ perfume.projecao or "Não informado" }}</strong>
+            </div>
+        </div>
+
+        {% if perfume.notas %}
+            <div class="notas-olfativas">
+                <span>Notas olfativas</span>
+                <p>{{ perfume.notas }}</p>
+            </div>
+        {% endif %}
+
+        {% if perfume.link_compra %}
+            <a
+                href="{{ perfume.link_compra }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <button type="button" class="botao-compra">
+                    Comprar no Mercado Livre
+                </button>
+            </a>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="link-voltar">
+            Voltar para a vitrine
+        </a>
+    </div>
 </section>
 {% else %}
-<p>Perfume não encontrado.</p>
+    <p>Perfume não encontrado.</p>
 
-<a href="{{ url_for('index') }}" class="link-voltar"> Voltar para a vitrine </a>
-{% endif %} {% endblock %}
+    <a href="{{ url_for('index') }}" class="link-voltar">
+        Voltar para a vitrine
+    </a>
+{% endif %}
+
+{% endblock %}

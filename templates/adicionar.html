@@ -1,31 +1,57 @@
-﻿{% extends "base.html" %} {% block content %}
+﻿{% extends "base.html" %}
+
+{% block content %}
 
 <h2>Adicionar novo perfume</h2>
 
 <form class="formulario" method="post">
-  <input type="text" name="nome" placeholder="Nome" required />
+    <input type="text" name="nome" placeholder="Nome" required>
 
-  <input type="text" name="marca" placeholder="Marca" required />
+    <input type="text" name="marca" placeholder="Marca" required>
 
-  <input type="text" name="tipo" placeholder="Tipo" />
+    <input type="text" name="tipo" placeholder="Tipo (ex: cítrico, fresco, unissex)">
 
-  <input type="number" name="preco" placeholder="Preço" step="0.01" />
+    <input type="number" name="preco" placeholder="Preço" step="0.01">
 
-  <textarea name="descricao" placeholder="Descrição"></textarea>
+    <textarea name="descricao" placeholder="Descrição"></textarea>
 
-  <input
-    type="text"
-    name="imagem"
-    placeholder="Imagem (ex: acqua_di_gio.jpg)"
-  />
+    <input
+        type="text"
+        name="notas"
+        placeholder="Notas olfativas (ex: bergamota, limão, musk)"
+    >
 
-  <input
-    type="url"
-    name="link_compra"
-    placeholder="Link afiliado do Mercado Livre"
-  />
+    <input
+        type="text"
+        name="ocasiao"
+        placeholder="Ocasião (ex: dia a dia, trabalho, calor)"
+    >
 
-  <button type="submit">Salvar</button>
+    <input
+        type="text"
+        name="fixacao"
+        placeholder="Fixação (ex: suave, moderada, intensa)"
+    >
+
+    <input
+        type="text"
+        name="projecao"
+        placeholder="Projeção (ex: discreta, moderada, marcante)"
+    >
+
+    <input
+        type="text"
+        name="imagem"
+        placeholder="Imagem (ex: acqua_di_gio.jpg)"
+    >
+
+    <input
+        type="url"
+        name="link_compra"
+        placeholder="Link afiliado do Mercado Livre"
+    >
+
+    <button type="submit">Salvar</button>
 </form>
 
 <a href="{{ url_for('index') }}" class="link-voltar">Voltar</a>

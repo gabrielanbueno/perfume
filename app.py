@@ -15,11 +15,21 @@ def garantir_colunas():
     colunas = conn.execute("PRAGMA table_info(perfumes)").fetchall()
     nomes_colunas = [coluna["name"] for coluna in colunas]
 
-    if "link_compra" not in nomes_colunas:
-        conn.execute("ALTER TABLE perfumes ADD COLUMN link_compra TEXT")
-        conn.commit()
+    novas_colunas = {
+        "link_compra": "TEXT",
+        "ocasiao": "TEXT",
+        "fixacao": "TEXT",
+        "projecao": "TEXT",
+        "notas": "TEXT"
+    }
 
+    for nome_coluna, tipo_coluna in novas_colunas.items():
+        if nome_coluna not in nomes_colunas:
+            conn.execute(f"ALTER TABLE perfumes ADD COLUMN {nome_coluna} {tipo_coluna}")
+
+    conn.commit()
     conn.close()
+
 
 
 @app.route("/")
@@ -68,21 +78,30 @@ def adicionar():
         descricao = request.form["descricao"]
         imagem = request.form["imagem"]
         link_compra = request.form["link_compra"]
+        ocasiao = request.form["ocasiao"]
+        fixacao = request.form["fixacao"]
+        projecao = request.form["projecao"]
+        notas = request.form["notas"]
 
         conn = get_db_connection()
         conn.execute(
             """
-            INSERT INTO perfumes (nome, marca, tipo, preco, descricao, imagem, link_compra)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO perfumes (
+                nome, marca, tipo, preco, descricao, imagem,
+                link_compra, ocasiao, fixacao, projecao, notas
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (nome, marca, tipo, preco, descricao, imagem, link_compra)
+            (
+                nome, marca, tipo, preco, descricao, imagem,
+                link_compra, ocasiao, fixacao, projecao, notas
+            )
         )
         conn.commit()
         conn.close()
 
         return redirect(url_for("index"))
     return render_template("adicionar.html")
-
 
 @app.route("/deletar/<int:id>")
 def deletar(id):
