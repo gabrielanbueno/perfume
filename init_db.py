@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS perfumes (
     ocasiao TEXT,
     fixacao TEXT,
     projecao TEXT,
-    notas TEXT
+    notas TEXT,
+    publico TEXT
 )
 """)
 
@@ -31,6 +32,7 @@ novas_colunas = {
     "fixacao": "TEXT",
     "projecao": "TEXT",
     "notas": "TEXT",
+    "publico": "TEXT",
 }
 
 for nome_coluna, tipo_coluna in novas_colunas.items():
@@ -43,12 +45,12 @@ if quantidade == 0:
     conn.execute("""
     INSERT INTO perfumes (
         nome, marca, tipo, preco, descricao, imagem, link_compra,
-        ocasiao, fixacao, projecao, notas
+        ocasiao, fixacao, projecao, notas, publico
     )
     VALUES
-    ('Acqua di Gio', 'Armani', 'citrico', 300, 'Fresco e elegante', 'acqua_di_gio.jpg', '', 'dia a dia', 'moderada', 'moderada', 'bergamota, jasmim, cedro'),
-    ('CK One', 'Calvin Klein', 'fresco', 200, 'Leve e compartilhavel', 'ck_one.jpg', '', 'calor', 'suave', 'discreta', 'limao, cha verde, musk'),
-    ('Natura Kaiak', 'Natura', 'citrico', 150, 'Perfeito para o dia a dia', 'kaiak_tradicional.jpg', '', 'rotina', 'moderada', 'moderada', 'notas aquaticas, ervas, musk')
+    ('Acqua di Gio', 'Armani', 'citrico', 300, 'Fresco e elegante', 'acqua_di_gio.jpg', '', 'dia a dia', 'moderada', 'moderada', 'bergamota, jasmim, cedro', 'masculino'),
+    ('CK One', 'Calvin Klein', 'fresco', 200, 'Leve e compartilhavel', 'ck_one.jpg', '', 'calor', 'suave', 'discreta', 'limao, cha verde, musk', 'unissex'),
+    ('Natura Kaiak', 'Natura', 'citrico', 150, 'Perfeito para o dia a dia', 'kaiak_tradicional.jpg', '', 'rotina', 'moderada', 'moderada', 'notas aquaticas, ervas, musk', 'masculino')
     """)
 
 conn.commit()

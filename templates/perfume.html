@@ -45,6 +45,11 @@
             </div>
 
             <div>
+                <span>Público</span>
+                <strong>{{ perfume.publico|capitalize if perfume.publico else "Não informado" }}</strong>
+            </div>
+
+            <div>
                 <span>Ocasião</span>
                 <strong>{{ perfume.ocasiao or "Não informado" }}</strong>
             </div>

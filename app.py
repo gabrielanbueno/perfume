@@ -33,12 +33,56 @@ def garantir_colunas():
         "ocasiao": "TEXT",
         "fixacao": "TEXT",
         "projecao": "TEXT",
-        "notas": "TEXT"
+        "notas": "TEXT",
+        "publico": "TEXT"
     }
+
+    coluna_publico_criada = False
 
     for nome_coluna, tipo_coluna in novas_colunas.items():
         if nome_coluna not in nomes_colunas:
             conn.execute(f"ALTER TABLE perfumes ADD COLUMN {nome_coluna} {tipo_coluna}")
+            if nome_coluna == "publico":
+                coluna_publico_criada = True
+
+    if coluna_publico_criada:
+        conn.execute("""
+            UPDATE perfumes
+            SET publico = 'masculino'
+            WHERE (publico IS NULL OR publico = '')
+              AND (
+                lower(nome) LIKE '%masculino%'
+                OR lower(nome) LIKE '%homem%'
+                OR lower(descricao) LIKE '%masculino%'
+                OR lower(descricao) LIKE '%homem%'
+                OR lower(tipo) = 'masculino'
+              )
+        """)
+        conn.execute("""
+            UPDATE perfumes
+            SET publico = 'feminino'
+            WHERE (publico IS NULL OR publico = '')
+              AND (
+                lower(nome) LIKE '%feminino%'
+                OR lower(nome) LIKE '%mulher%'
+                OR lower(descricao) LIKE '%feminino%'
+                OR lower(descricao) LIKE '%mulher%'
+                OR lower(tipo) = 'feminino'
+              )
+        """)
+        conn.execute("""
+            UPDATE perfumes
+            SET publico = 'unissex'
+            WHERE (publico IS NULL OR publico = '')
+              AND (
+                lower(nome) LIKE '%unissex%'
+                OR lower(nome) LIKE '%unisex%'
+                OR lower(descricao) LIKE '%unissex%'
+                OR lower(descricao) LIKE '%unisex%'
+                OR lower(tipo) = 'unissex'
+                OR lower(tipo) = 'unisex'
+              )
+        """)
 
     conn.commit()
     conn.close()
@@ -50,6 +94,7 @@ def index():
     garantir_colunas()
     busca = request.args.get("busca", "").strip()
     tipo = request.args.get("tipo")
+    publico = request.args.get("publico")
     preco_min = request.args.get("preco_min")
     preco_max = request.args.get("preco_max")
 
@@ -74,6 +119,10 @@ def index():
         query += " AND tipo = ?"
         parametros.append(tipo)
 
+    if publico:
+        query += " AND publico = ?"
+        parametros.append(publico)
+
     preco_min_numero = converter_preco(preco_min)
     if preco_min_numero is not None:
         query += " AND preco >= ?"
@@ -93,6 +142,7 @@ def index():
     filtros = {
         "busca": busca,
         "tipo": tipo or "",
+        "publico": publico or "",
         "preco_min": preco_min or "",
         "preco_max": preco_max or "",
     }
@@ -117,6 +167,7 @@ def adicionar():
         nome = request.form["nome"]
         marca = request.form["marca"]
         tipo = request.form["tipo"]
+        publico = request.form["publico"]
         preco = converter_preco(request.form["preco"])
         descricao = request.form["descricao"]
         imagem = request.form["imagem"]
@@ -131,13 +182,13 @@ def adicionar():
             """
             INSERT INTO perfumes (
                 nome, marca, tipo, preco, descricao, imagem,
-                link_compra, ocasiao, fixacao, projecao, notas
+                link_compra, ocasiao, fixacao, projecao, notas, publico
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 nome, marca, tipo, preco, descricao, imagem,
-                link_compra, ocasiao, fixacao, projecao, notas
+                link_compra, ocasiao, fixacao, projecao, notas, publico
             )
         )
         conn.commit()
@@ -163,6 +214,7 @@ def editar(id):
         nome = request.form["nome"]
         marca = request.form["marca"]
         tipo = request.form["tipo"]
+        publico = request.form["publico"]
         preco = converter_preco(request.form["preco"])
         descricao = request.form["descricao"]
         imagem = request.form["imagem"]
@@ -185,12 +237,13 @@ def editar(id):
                 ocasiao = ?,
                 fixacao = ?,
                 projecao = ?,
-                notas = ?
+                notas = ?,
+                publico = ?
             WHERE id = ?
             """,
             (
                 nome, marca, tipo, preco, descricao, imagem,
-                link_compra, ocasiao, fixacao, projecao, notas, id
+                link_compra, ocasiao, fixacao, projecao, notas, publico, id
             )
         )
         conn.commit()

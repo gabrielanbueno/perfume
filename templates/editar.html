@@ -12,6 +12,13 @@
 
         <input type="text" name="tipo" placeholder="Tipo" value="{{ perfume.tipo or '' }}">
 
+        <select name="publico">
+            <option value="">Público</option>
+            <option value="masculino" {% if perfume.publico == "masculino" %}selected{% endif %}>Masculino</option>
+            <option value="feminino" {% if perfume.publico == "feminino" %}selected{% endif %}>Feminino</option>
+            <option value="unissex" {% if perfume.publico == "unissex" %}selected{% endif %}>Unissex</option>
+        </select>
+
         <input type="number" name="preco" placeholder="Preço" step="0.01" value="{{ perfume.preco or '' }}">
 
         <input type="text" name="ocasiao" placeholder="Ocasião" value="{{ perfume.ocasiao or '' }}">

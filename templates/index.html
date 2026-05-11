@@ -36,6 +36,13 @@
         {% endfor %}
     </select>
 
+    <select name="publico">
+        <option value="">Todos os públicos</option>
+        <option value="masculino" {% if filtros.publico == "masculino" %}selected{% endif %}>Masculino</option>
+        <option value="feminino" {% if filtros.publico == "feminino" %}selected{% endif %}>Feminino</option>
+        <option value="unissex" {% if filtros.publico == "unissex" %}selected{% endif %}>Unissex</option>
+    </select>
+
     <input
         type="number"
         name="preco_min"
@@ -75,7 +82,15 @@
             </div>
 
             <div class="card-conteudo">
-                <span class="categoria">{{ perfume.tipo }}</span>
+                <div class="tags-card">
+                    {% if perfume.tipo %}
+                        <span class="categoria">{{ perfume.tipo }}</span>
+                    {% endif %}
+
+                    {% if perfume.publico %}
+                        <span class="categoria categoria-publico">{{ perfume.publico }}</span>
+                    {% endif %}
+                </div>
 
                 <h3>{{ perfume.nome }}</h3>
 
