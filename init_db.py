@@ -1,6 +1,9 @@
-﻿import sqlite3
+import sqlite3
+from pathlib import Path
 
-conn = sqlite3.connect("perfumes.db")
+BASE_DIR = Path(__file__).resolve().parent
+
+conn = sqlite3.connect(BASE_DIR / "perfumes.db")
 
 conn.execute("""
 CREATE TABLE IF NOT EXISTS perfumes (
@@ -11,25 +14,41 @@ CREATE TABLE IF NOT EXISTS perfumes (
     preco REAL,
     descricao TEXT,
     imagem TEXT,
-    link_compra TEXT
+    link_compra TEXT,
+    ocasiao TEXT,
+    fixacao TEXT,
+    projecao TEXT,
+    notas TEXT
 )
 """)
 
 colunas = conn.execute("PRAGMA table_info(perfumes)").fetchall()
 nomes_colunas = [coluna[1] for coluna in colunas]
 
-if "link_compra" not in nomes_colunas:
-    conn.execute("ALTER TABLE perfumes ADD COLUMN link_compra TEXT")
+novas_colunas = {
+    "link_compra": "TEXT",
+    "ocasiao": "TEXT",
+    "fixacao": "TEXT",
+    "projecao": "TEXT",
+    "notas": "TEXT",
+}
+
+for nome_coluna, tipo_coluna in novas_colunas.items():
+    if nome_coluna not in nomes_colunas:
+        conn.execute(f"ALTER TABLE perfumes ADD COLUMN {nome_coluna} {tipo_coluna}")
 
 quantidade = conn.execute("SELECT COUNT(*) FROM perfumes").fetchone()[0]
 
 if quantidade == 0:
     conn.execute("""
-    INSERT INTO perfumes (nome, marca, tipo, preco, descricao, imagem, link_compra)
+    INSERT INTO perfumes (
+        nome, marca, tipo, preco, descricao, imagem, link_compra,
+        ocasiao, fixacao, projecao, notas
+    )
     VALUES
-    ('Acqua di Gio', 'Armani', 'citrico', 300, 'Fresco e elegante', 'acqua_di_gio.jpg', ''),
-    ('CK One', 'Calvin Klein', 'fresco', 200, 'Leve e compartilhável', 'ck_one.jpg', ''),
-    ('Natura Kaiak', 'Natura', 'citrico', 150, 'Perfeito para o dia a dia', 'kaiak_tradicional.jpg', '')
+    ('Acqua di Gio', 'Armani', 'citrico', 300, 'Fresco e elegante', 'acqua_di_gio.jpg', '', 'dia a dia', 'moderada', 'moderada', 'bergamota, jasmim, cedro'),
+    ('CK One', 'Calvin Klein', 'fresco', 200, 'Leve e compartilhavel', 'ck_one.jpg', '', 'calor', 'suave', 'discreta', 'limao, cha verde, musk'),
+    ('Natura Kaiak', 'Natura', 'citrico', 150, 'Perfeito para o dia a dia', 'kaiak_tradicional.jpg', '', 'rotina', 'moderada', 'moderada', 'notas aquaticas, ervas, musk')
     """)
 
 conn.commit()

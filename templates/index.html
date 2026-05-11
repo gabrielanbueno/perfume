@@ -17,18 +17,44 @@
 </section>
 
 <form class="filtro" method="get">
+    <input
+        type="search"
+        name="busca"
+        placeholder="Buscar por perfume, marca ou notas"
+        value="{{ filtros.busca }}"
+    >
+
     <select name="tipo">
-        <option value="">Tipo</option>
-        <option value="citrico">Cítrico</option>
-        <option value="fresco">Fresco</option>
-        <option value="masculino">Masculino</option>
-        <option value="feminino">Feminino</option>
-        <option value="unissex">Unissex</option>
+        <option value="">Todos os tipos</option>
+        {% for item in tipos %}
+            <option
+                value="{{ item.tipo }}"
+                {% if filtros.tipo == item.tipo %}selected{% endif %}
+            >
+                {{ item.tipo|capitalize }}
+            </option>
+        {% endfor %}
     </select>
 
-    <input type="number" name="preco_min" placeholder="Preço mínimo" step="0.01">
+    <input
+        type="number"
+        name="preco_min"
+        placeholder="Preço mínimo"
+        step="0.01"
+        value="{{ filtros.preco_min }}"
+    >
+
+    <input
+        type="number"
+        name="preco_max"
+        placeholder="Preço máximo"
+        step="0.01"
+        value="{{ filtros.preco_max }}"
+    >
 
     <button type="submit">Filtrar</button>
+
+    <a href="{{ url_for('index') }}" class="limpar-filtro">Limpar</a>
 </form>
 
 <div class="grid">
@@ -68,7 +94,6 @@
                         <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
                             <button type="button">Mais detalhes</button>
                         </a>
-                        </a>
 
                         <a href="{{ url_for('editar', id=perfume.id) }}">
                             <button type="button">Editar</button>
@@ -82,13 +107,24 @@
                     </a>
                 {% endif %}
 
-                <a href="{{ url_for('deletar', id=perfume.id) }}">
-                    <button type="button" class="botao-excluir">Excluir</button>
-                </a>
+                <form
+                    class="form-excluir"
+                    method="post"
+                    action="{{ url_for('deletar', id=perfume.id) }}"
+                    onsubmit="return confirm('Excluir {{ perfume.nome }} da vitrine?')"
+                >
+                    <button type="submit" class="botao-excluir">Excluir</button>
+                </form>
             </div>
         </article>
     {% else %}
-        <p>Nenhum perfume cadastrado ainda.</p>
+        <div class="estado-vazio">
+            <h3>Nenhum perfume encontrado</h3>
+            <p>Ajuste os filtros ou cadastre uma nova fragrância na vitrine.</p>
+            <a href="{{ url_for('adicionar') }}">
+                <button type="button">Adicionar perfume</button>
+            </a>
+        </div>
     {% endfor %}
 </div>
 
