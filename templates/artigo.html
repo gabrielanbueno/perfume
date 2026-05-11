@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article class="artigo-pagina">
+    <header class="artigo-cabecalho">
+        <span class="secao-label">{{ artigo.categoria }} · {{ artigo.tempo }}</span>
+        <h2>{{ artigo.titulo }}</h2>
+        <p>{{ artigo.resumo }}</p>
+    </header>
+
+    <img
+        class="artigo-imagem"
+        src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}"
+        alt="{{ artigo.titulo }}"
+    >
+
+    <div class="artigo-corpo">
+        {% for paragrafo in artigo.conteudo %}
+            <p>{{ paragrafo }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="artigo-rodape">
+        <a href="{{ url_for('artigos') }}" class="link-voltar">Voltar para artigos</a>
+        <a href="{{ url_for('perfumes') }}"><button type="button">Explorar perfumes</button></a>
+    </div>
+</article>
+
+{% endblock %}

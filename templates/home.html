@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="editorial-hero">
+    <div class="editorial-hero-texto">
+        <span class="secao-label">Blog e curadoria</span>
+        <h2>Perfumes frescos, cítricos e fáceis de usar no mundo real</h2>
+        <p>
+            Guias, reviews e recomendações para escolher fragrâncias com mais segurança, sem perder a praticidade da vitrine completa.
+        </p>
+        <div class="hero-acoes">
+            <a href="{{ url_for('artigos') }}"><button type="button">Ler artigos</button></a>
+            <a href="{{ url_for('perfumes') }}" class="botao-secundario">Ver todos os perfumes</a>
+        </div>
+    </div>
+
+    <a href="{{ url_for('artigo', slug=artigos[0].slug) }}" class="artigo-destaque">
+        <img src="{{ url_for('static', filename='imagens/' + artigos[0].imagem) }}" alt="{{ artigos[0].titulo }}">
+        <div>
+            <span>{{ artigos[0].categoria }} · {{ artigos[0].tempo }}</span>
+            <h3>{{ artigos[0].titulo }}</h3>
+            <p>{{ artigos[0].resumo }}</p>
+        </div>
+    </a>
+</section>
+
+<section class="secao-editorial">
+    <div class="secao-cabecalho">
+        <div>
+            <span class="secao-label">Artigos recentes</span>
+            <h2>Guias e reviews</h2>
+        </div>
+        <a href="{{ url_for('artigos') }}" class="link-voltar">Ver todos</a>
+    </div>
+
+    <div class="grid-editorial">
+        {% for artigo in artigos[1:] %}
+            <a href="{{ url_for('artigo', slug=artigo.slug) }}" class="card-artigo">
+                <img src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}" alt="{{ artigo.titulo }}">
+                <span>{{ artigo.categoria }} · {{ artigo.tempo }}</span>
+                <h3>{{ artigo.titulo }}</h3>
+                <p>{{ artigo.resumo }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="secao-editorial">
+    <div class="secao-cabecalho">
+        <div>
+            <span class="secao-label">Vitrine geral</span>
+            <h2>Perfumes recomendados</h2>
+        </div>
+        <a href="{{ url_for('perfumes') }}" class="link-voltar">Explorar catálogo</a>
+    </div>
+
+    <div class="grid grid-compacta">
+        {% for perfume in destaques %}
+            <article class="card">
+                <div class="card-imagem">
+                    {% if perfume.imagem %}
+                        <img src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}" alt="{{ perfume.nome }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='imagens/padrao.jpg') }}" alt="Imagem padrão">
+                    {% endif %}
+                </div>
+
+                <div class="card-conteudo">
+                    <div class="tags-card">
+                        {% if perfume.tipo %}
+                            <span class="categoria">{{ perfume.tipo }}</span>
+                        {% endif %}
+                        {% if perfume.publico %}
+                            <span class="categoria categoria-publico">{{ perfume.publico }}</span>
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ perfume.nome }}</h3>
+                    <p class="marca">{{ perfume.marca }}</p>
+                    <p class="descricao">{{ perfume.descricao }}</p>
+
+                    <div class="card-rodape">
+                        <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
+                            <button type="button">Ler review</button>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

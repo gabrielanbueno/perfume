@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="vitrine-topo">
+    <div>
+        <span class="secao-label">Editorial</span>
+        <h2>Artigos, guias e reviews</h2>
+        <p>
+            Conteúdos para ajudar na escolha do perfume ideal por ocasião, clima, estilo e sensação olfativa.
+        </p>
+    </div>
+</section>
+
+<div class="grid-editorial">
+    {% for artigo in artigos %}
+        <a href="{{ url_for('artigo', slug=artigo.slug) }}" class="card-artigo">
+            <img src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}" alt="{{ artigo.titulo }}">
+            <span>{{ artigo.categoria }} · {{ artigo.tempo }}</span>
+            <h3>{{ artigo.titulo }}</h3>
+            <p>{{ artigo.resumo }}</p>
+        </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -6,6 +6,48 @@ app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "perfumes.db"
 
+ARTIGOS = [
+    {
+        "slug": "perfumes-citricos-para-dias-quentes",
+        "categoria": "Guia",
+        "titulo": "Perfumes cítricos para dias quentes",
+        "resumo": "Como escolher fragrâncias leves, frescas e confortáveis para calor, rotina e momentos ao ar livre.",
+        "imagem": "acqua_fresca.jpg",
+        "tempo": "4 min",
+        "conteudo": [
+            "Perfumes cítricos funcionam muito bem em dias quentes porque entregam sensação de limpeza, energia e leveza sem pesar na pele.",
+            "Na prática, procure notas como bergamota, limão siciliano, laranja, mandarina, chá verde e acordes aquáticos. Elas costumam abrir com brilho e deixam a fragrância mais fácil de usar durante o dia.",
+            "Para rotina, trabalho ou estudo, prefira projeção moderada e fixação equilibrada. O perfume não precisa dominar o ambiente para ser marcante.",
+        ],
+    },
+    {
+        "slug": "como-escolher-perfume-para-trabalho",
+        "categoria": "Curadoria",
+        "titulo": "Como escolher perfume para trabalho",
+        "resumo": "Um guia direto para usar fragrância no escritório sem exagero: frescor, discrição e presença na medida.",
+        "imagem": "ck_one.jpg",
+        "tempo": "3 min",
+        "conteudo": [
+            "No trabalho, a melhor escolha costuma ser uma fragrância confortável: limpa, elegante e com projeção controlada.",
+            "Perfumes frescos, cítricos, aromáticos suaves e aquáticos são bons caminhos. Eles passam cuidado pessoal sem competir com o espaço de outras pessoas.",
+            "Aplique pouco, principalmente em ambientes fechados. Dois borrifos bem posicionados já podem ser suficientes.",
+        ],
+    },
+    {
+        "slug": "review-kaiak-masculino",
+        "categoria": "Review",
+        "titulo": "Review: Kaiak Masculino",
+        "resumo": "Um clássico fresco da Natura para quem gosta de perfume fácil, versátil e com cara de movimento.",
+        "imagem": "kaiak_tradicional.jpg",
+        "tempo": "5 min",
+        "conteudo": [
+            "Kaiak Masculino é uma fragrância de proposta muito clara: frescor, praticidade e uso diário.",
+            "Ele combina bem com calor, rotina, academia leve, trabalho informal e momentos casuais. Não é um perfume pesado, e essa é justamente a força dele.",
+            "Vale para quem quer um perfume acessível, reconhecível e fácil de reaplicar ao longo do dia.",
+        ],
+    },
+]
+
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -147,8 +189,31 @@ def buscar_perfumes():
     return perfumes, tipos, filtros
 
 
+def listar_destaques(limite=6):
+    garantir_colunas()
+    conn = get_db_connection()
+    perfumes = conn.execute(
+        """
+        SELECT * FROM perfumes
+        ORDER BY
+            CASE WHEN link_compra IS NOT NULL AND link_compra != '' THEN 0 ELSE 1 END,
+            nome COLLATE NOCASE
+        LIMIT ?
+        """,
+        (limite,),
+    ).fetchall()
+    conn.close()
+    return perfumes
+
+
 @app.route("/")
 def index():
+    destaques = listar_destaques()
+    return render_template("home.html", artigos=ARTIGOS, destaques=destaques)
+
+
+@app.route("/perfumes")
+def perfumes():
     perfumes, tipos, filtros = buscar_perfumes()
     return render_template("index.html", perfumes=perfumes, tipos=tipos, filtros=filtros)
 
@@ -157,6 +222,20 @@ def index():
 def admin():
     perfumes, tipos, filtros = buscar_perfumes()
     return render_template("admin.html", perfumes=perfumes, tipos=tipos, filtros=filtros)
+
+
+@app.route("/artigos")
+def artigos():
+    return render_template("artigos.html", artigos=ARTIGOS)
+
+
+@app.route("/artigo/<slug>")
+def artigo(slug):
+    artigo_encontrado = next((item for item in ARTIGOS if item["slug"] == slug), None)
+    if artigo_encontrado is None:
+        return redirect(url_for("artigos"))
+
+    return render_template("artigo.html", artigo=artigo_encontrado, artigos=ARTIGOS)
 
 
 @app.route("/perfume/<int:id>")
