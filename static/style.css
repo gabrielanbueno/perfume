@@ -23,6 +23,48 @@ body {
     color: var(--ink);
 }
 
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 250, 243, 0.94);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+}
+
+.topbar-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 58px;
+}
+
+.topbar-logo {
+    color: var(--brand-dark);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.topbar-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.topbar-links a {
+    padding: 9px 13px;
+    color: var(--muted);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.topbar-links a:hover {
+    color: var(--brand-dark);
+    background: var(--surface-soft);
+}
+
 h1, h2, h3 {
     font-family: "Playfair Display", Georgia, serif;
 }
@@ -320,6 +362,10 @@ button:hover {
     gap: 10px;
 }
 
+.card-acoes-publico {
+    grid-template-columns: 1fr;
+}
+
 .card-acoes button {
     width: 100%;
     padding-left: 12px;
@@ -527,6 +573,14 @@ footer {
 @media (max-width: 760px) {
     .header {
         padding: 34px 0 40px;
+    }
+
+    .topbar-conteudo {
+        min-height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .header h1 {

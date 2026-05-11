@@ -88,9 +88,7 @@ def garantir_colunas():
     conn.close()
 
 
-
-@app.route("/")
-def index():
+def buscar_perfumes():
     garantir_colunas()
     busca = request.args.get("busca", "").strip()
     tipo = request.args.get("tipo")
@@ -146,7 +144,19 @@ def index():
         "preco_min": preco_min or "",
         "preco_max": preco_max or "",
     }
+    return perfumes, tipos, filtros
+
+
+@app.route("/")
+def index():
+    perfumes, tipos, filtros = buscar_perfumes()
     return render_template("index.html", perfumes=perfumes, tipos=tipos, filtros=filtros)
+
+
+@app.route("/admin")
+def admin():
+    perfumes, tipos, filtros = buscar_perfumes()
+    return render_template("admin.html", perfumes=perfumes, tipos=tipos, filtros=filtros)
 
 
 @app.route("/perfume/<int:id>")
@@ -194,7 +204,7 @@ def adicionar():
         conn.commit()
         conn.close()
 
-        return redirect(url_for("index"))
+        return redirect(url_for("admin"))
     return render_template("adicionar.html")
 
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
@@ -208,7 +218,7 @@ def editar(id):
 
     if perfume is None:
         conn.close()
-        return redirect(url_for("index"))
+        return redirect(url_for("admin"))
 
     if request.method == "POST":
         nome = request.form["nome"]
@@ -249,7 +259,7 @@ def editar(id):
         conn.commit()
         conn.close()
 
-        return redirect(url_for("detalhe_perfume", id=id))
+        return redirect(url_for("admin"))
 
     conn.close()
     return render_template("editar.html", perfume=perfume)
@@ -260,7 +270,7 @@ def deletar(id):
     conn.execute("DELETE FROM perfumes WHERE id = ?", (id,))
     conn.commit()
     conn.close()
-    return redirect(url_for("index"))
+    return redirect(url_for("admin"))
 
 
 if __name__ == "__main__":
