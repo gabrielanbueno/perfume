@@ -148,6 +148,10 @@ h2 {
     margin-right: auto;
 }
 
+.formulario-largo {
+    max-width: 920px;
+}
+
 .form-grid {
     display: grid;
     gap: 12px;
@@ -324,6 +328,11 @@ button:hover {
 .categoria-publico {
     background: #eef7f0;
     color: #3d7450;
+}
+
+.categoria-promocao {
+    background: #fff1cc;
+    color: #8a5b00;
 }
 
 .card p strong {
@@ -595,6 +604,122 @@ a {
     margin-top: 28px;
 }
 
+.admin-bloco {
+    margin-bottom: 38px;
+}
+
+.lista-admin {
+    display: grid;
+    gap: 12px;
+}
+
+.linha-admin {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: center;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(23, 51, 44, 0.08);
+}
+
+.linha-admin span {
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.linha-admin h3 {
+    margin: 6px 0;
+    font-size: 22px;
+}
+
+.linha-admin p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.linha-admin-acoes {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 8px;
+    align-items: center;
+}
+
+.linha-admin-acoes form {
+    margin: 0;
+}
+
+.check-editorial {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 13px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.check-editorial input {
+    width: auto;
+}
+
+.textarea-conteudo {
+    min-height: 260px;
+}
+
+.campo-indicacoes {
+    display: grid;
+    gap: 12px;
+}
+
+.lista-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    max-height: 280px;
+    overflow: auto;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+
+.lista-checkboxes label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--ink);
+    line-height: 1.45;
+}
+
+.lista-checkboxes input {
+    width: auto;
+    margin-top: 3px;
+}
+
+.links-materia {
+    display: grid;
+    gap: 10px;
+}
+
+.links-materia a {
+    overflow-wrap: anywhere;
+    padding: 13px 15px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--brand-dark);
+    font-weight: 700;
+}
+
 .detalhe-perfume {
     display: grid;
     grid-template-columns: minmax(280px, 440px) 1fr;
@@ -838,5 +963,12 @@ footer {
         width: 100%;
     }
 
+    .linha-admin {
+        grid-template-columns: 1fr;
+    }
+
+    .linha-admin-acoes {
+        grid-template-columns: 1fr;
+    }
 
 }

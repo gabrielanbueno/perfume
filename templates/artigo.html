@@ -11,15 +11,82 @@
 
     <img
         class="artigo-imagem"
-        src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}"
+        src="{{ imagem_url(artigo.imagem) }}"
         alt="{{ artigo.titulo }}"
     >
 
     <div class="artigo-corpo">
-        {% for paragrafo in artigo.conteudo %}
+        {% for paragrafo in artigo.conteudo.split("\n\n") %}
             <p>{{ paragrafo }}</p>
         {% endfor %}
     </div>
+
+    {% if perfumes_indicados %}
+        <section class="secao-editorial">
+            <div class="secao-cabecalho">
+                <div>
+                    <span class="secao-label">Indicações</span>
+                    <h2>Perfumes citados no artigo</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-compacta">
+                {% for perfume in perfumes_indicados %}
+                    <article class="card">
+                        <div class="card-imagem">
+                            {% if perfume.imagem %}
+                                <img src="{{ imagem_url(perfume.imagem) }}" alt="{{ perfume.nome }}">
+                            {% else %}
+                                <img src="{{ imagem_url('') }}" alt="Imagem padrão">
+                            {% endif %}
+                        </div>
+
+                        <div class="card-conteudo">
+                            <div class="tags-card">
+                                {% if perfume.promocao_dia %}
+                                    <span class="categoria categoria-promocao">Promoção do dia</span>
+                                {% endif %}
+
+                                {% if perfume.tipo %}
+                                    <span class="categoria">{{ perfume.tipo }}</span>
+                                {% endif %}
+                                {% if perfume.publico %}
+                                    <span class="categoria categoria-publico">{{ perfume.publico }}</span>
+                                {% endif %}
+                            </div>
+
+                            <h3>{{ perfume.nome }}</h3>
+                            <p class="marca">{{ perfume.marca }}</p>
+                            <a href="{{ url_for('detalhe_perfume', id=perfume.id) }}">
+                                <button type="button">Ver perfume</button>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    {% if artigo.links_perfumes %}
+        <section class="secao-editorial">
+            <div class="secao-cabecalho">
+                <div>
+                    <span class="secao-label">Links da matéria</span>
+                    <h2>Perfumes mencionados</h2>
+                </div>
+            </div>
+
+            <div class="links-materia">
+                {% for link in artigo.links_perfumes.splitlines() %}
+                    {% if link.strip() %}
+                        <a href="{{ link.strip() }}" target="_blank" rel="noopener noreferrer">
+                            {{ link.strip() }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
 
     <div class="artigo-rodape">
         <a href="{{ url_for('artigos') }}" class="link-voltar">Voltar para artigos</a>

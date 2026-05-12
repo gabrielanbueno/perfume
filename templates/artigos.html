@@ -15,7 +15,7 @@
 <div class="grid-editorial">
     {% for artigo in artigos %}
         <a href="{{ url_for('artigo', slug=artigo.slug) }}" class="card-artigo">
-            <img src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}" alt="{{ artigo.titulo }}">
+            <img src="{{ imagem_url(artigo.imagem) }}" alt="{{ artigo.titulo }}">
             <span>{{ artigo.categoria }} · {{ artigo.tempo }}</span>
             <h3>{{ artigo.titulo }}</h3>
             <p>{{ artigo.resumo }}</p>

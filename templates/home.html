@@ -16,7 +16,7 @@
     </div>
 
     <a href="{{ url_for('artigo', slug=artigos[0].slug) }}" class="artigo-destaque">
-        <img src="{{ url_for('static', filename='imagens/' + artigos[0].imagem) }}" alt="{{ artigos[0].titulo }}">
+        <img src="{{ imagem_url(artigos[0].imagem) }}" alt="{{ artigos[0].titulo }}">
         <div>
             <span>{{ artigos[0].categoria }} · {{ artigos[0].tempo }}</span>
             <h3>{{ artigos[0].titulo }}</h3>
@@ -37,7 +37,7 @@
     <div class="grid-editorial">
         {% for artigo in artigos[1:] %}
             <a href="{{ url_for('artigo', slug=artigo.slug) }}" class="card-artigo">
-                <img src="{{ url_for('static', filename='imagens/' + artigo.imagem) }}" alt="{{ artigo.titulo }}">
+                <img src="{{ imagem_url(artigo.imagem) }}" alt="{{ artigo.titulo }}">
                 <span>{{ artigo.categoria }} · {{ artigo.tempo }}</span>
                 <h3>{{ artigo.titulo }}</h3>
                 <p>{{ artigo.resumo }}</p>
@@ -60,14 +60,18 @@
             <article class="card">
                 <div class="card-imagem">
                     {% if perfume.imagem %}
-                        <img src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}" alt="{{ perfume.nome }}">
+                        <img src="{{ imagem_url(perfume.imagem) }}" alt="{{ perfume.nome }}">
                     {% else %}
-                        <img src="{{ url_for('static', filename='imagens/padrao.jpg') }}" alt="Imagem padrão">
+                        <img src="{{ imagem_url('') }}" alt="Imagem padrão">
                     {% endif %}
                 </div>
 
                 <div class="card-conteudo">
                     <div class="tags-card">
+                        {% if perfume.promocao_dia %}
+                            <span class="categoria categoria-promocao">Promoção do dia</span>
+                        {% endif %}
+
                         {% if perfume.tipo %}
                             <span class="categoria">{{ perfume.tipo }}</span>
                         {% endif %}

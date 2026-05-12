@@ -5,6 +5,17 @@
 <h2>Editar perfume</h2>
 
 <form class="formulario" method="post">
+    <input
+        type="url"
+        name="link_compra"
+        placeholder="Cole o link do produto para atualizar dados"
+        value="{{ perfume.link_compra or '' }}"
+    >
+
+    <button type="submit" name="acao" value="importar" class="botao-secundario">
+        Buscar dados do link
+    </button>
+
     <div class="form-grid">
         <input type="text" name="nome" placeholder="Nome" value="{{ perfume.nome }}" required>
 
@@ -19,7 +30,7 @@
             <option value="unissex" {% if perfume.publico == "unissex" %}selected{% endif %}>Unissex</option>
         </select>
 
-        <input type="number" name="preco" placeholder="Preço" step="0.01" value="{{ perfume.preco or '' }}">
+        <input type="text" name="preco" placeholder="Preço" value="{{ perfume.preco or '' }}">
 
         <input type="text" name="ocasiao" placeholder="Ocasião" value="{{ perfume.ocasiao or '' }}">
 
@@ -27,16 +38,23 @@
 
         <input type="text" name="projecao" placeholder="Projeção" value="{{ perfume.projecao or '' }}">
 
-        <input type="text" name="imagem" placeholder="Imagem" value="{{ perfume.imagem or '' }}">
+        <input type="text" name="imagem" placeholder="Imagem ou URL da foto" value="{{ perfume.imagem or '' }}">
+
+        <label class="check-editorial">
+            <input
+                type="checkbox"
+                name="promocao_dia"
+                {% if perfume.promocao_dia %}checked{% endif %}
+            >
+            Promoção do dia
+        </label>
     </div>
 
     <textarea name="descricao" placeholder="Descrição">{{ perfume.descricao or '' }}</textarea>
 
     <textarea name="notas" placeholder="Notas olfativas">{{ perfume.notas or '' }}</textarea>
 
-    <input type="url" name="link_compra" placeholder="Link afiliado do Mercado Livre" value="{{ perfume.link_compra or '' }}">
-
-    <button type="submit">Salvar alterações</button>
+    <button type="submit" name="acao" value="salvar">Salvar alterações</button>
 </form>
 
 <a href="{{ url_for('admin') }}" class="link-voltar">

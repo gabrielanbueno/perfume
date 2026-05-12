@@ -2,6 +2,51 @@
 
 {% block content %}
 
+<section class="admin-bloco">
+    <div class="secao-cabecalho">
+        <div>
+            <span class="secao-label">Editorial</span>
+            <h2>Artigos e reviews</h2>
+        </div>
+        <a href="{{ url_for('novo_artigo') }}">
+            <button type="button">+ Novo artigo</button>
+        </a>
+    </div>
+
+    <div class="lista-admin">
+        {% for artigo in artigos %}
+            <article class="linha-admin">
+                <div>
+                    <span>{{ artigo.categoria or "Artigo" }} · {{ artigo.tempo or "leitura" }}</span>
+                    <h3>{{ artigo.titulo }}</h3>
+                    <p>{{ artigo.resumo }}</p>
+                </div>
+
+                <div class="linha-admin-acoes">
+                    <a href="{{ url_for('artigo', slug=artigo.slug) }}">
+                        <button type="button">Ver</button>
+                    </a>
+                    <a href="{{ url_for('editar_artigo', id=artigo.id) }}">
+                        <button type="button">Editar</button>
+                    </a>
+                    <form
+                        method="post"
+                        action="{{ url_for('deletar_artigo', id=artigo.id) }}"
+                        onsubmit="return confirm('Excluir o artigo {{ artigo.titulo }}?')"
+                    >
+                        <button type="submit" class="botao-excluir">Excluir</button>
+                    </form>
+                </div>
+            </article>
+        {% else %}
+            <div class="estado-vazio">
+                <h3>Nenhum artigo cadastrado</h3>
+                <p>Crie o primeiro conteúdo editorial para aparecer na home do blog.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
 <section class="vitrine-topo">
     <div>
         <span class="secao-label">Administração</span>
@@ -70,12 +115,12 @@
             <div class="card-imagem">
                 {% if perfume.imagem %}
                     <img
-                        src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
+                        src="{{ imagem_url(perfume.imagem) }}"
                         alt="{{ perfume.nome }}"
                     >
                 {% else %}
                     <img
-                        src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
+                        src="{{ imagem_url('') }}"
                         alt="Imagem padrão"
                     >
                 {% endif %}
@@ -83,6 +128,10 @@
 
             <div class="card-conteudo">
                 <div class="tags-card">
+                    {% if perfume.promocao_dia %}
+                        <span class="categoria categoria-promocao">Promoção do dia</span>
+                    {% endif %}
+
                     {% if perfume.tipo %}
                         <span class="categoria">{{ perfume.tipo }}</span>
                     {% endif %}

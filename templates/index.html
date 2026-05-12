@@ -66,12 +66,12 @@
             <div class="card-imagem">
                 {% if perfume.imagem %}
                     <img
-                        src="{{ url_for('static', filename='imagens/' + perfume.imagem) }}"
+                        src="{{ imagem_url(perfume.imagem) }}"
                         alt="{{ perfume.nome }}"
                     >
                 {% else %}
                     <img
-                        src="{{ url_for('static', filename='imagens/padrao.jpg') }}"
+                        src="{{ imagem_url('') }}"
                         alt="Imagem padrão"
                     >
                 {% endif %}
@@ -79,6 +79,10 @@
 
             <div class="card-conteudo">
                 <div class="tags-card">
+                    {% if perfume.promocao_dia %}
+                        <span class="categoria categoria-promocao">Promoção do dia</span>
+                    {% endif %}
+
                     {% if perfume.tipo %}
                         <span class="categoria">{{ perfume.tipo }}</span>
                     {% endif %}

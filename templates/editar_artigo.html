@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="vitrine-topo">
+    <div>
+        <span class="secao-label">Editorial</span>
+        <h2>{% if artigo %}Editar artigo{% else %}Novo artigo{% endif %}</h2>
+        <p>
+            Escreva o conteúdo do blog e cole os links dos perfumes citados na matéria. Se algum perfume já estiver no catálogo, você também pode marcá-lo como indicação.
+        </p>
+    </div>
+</section>
+
+<form class="formulario formulario-largo" method="post">
+    <div class="form-grid">
+        <input
+            type="text"
+            name="titulo"
+            placeholder="Título"
+            value="{{ artigo.titulo if artigo else '' }}"
+            required
+        >
+
+        <input
+            type="text"
+            name="slug"
+            placeholder="Slug da URL"
+            value="{{ artigo.slug if artigo else '' }}"
+        >
+
+        <input
+            type="text"
+            name="categoria"
+            placeholder="Categoria (ex: Review, Guia)"
+            value="{{ artigo.categoria if artigo else '' }}"
+        >
+
+        <input
+            type="text"
+            name="tempo"
+            placeholder="Tempo de leitura (ex: 4 min)"
+            value="{{ artigo.tempo if artigo else '' }}"
+        >
+
+        <input
+            type="text"
+            name="imagem"
+            placeholder="Imagem de capa (arquivo ou URL)"
+            value="{{ artigo.imagem if artigo else '' }}"
+        >
+
+        <label class="check-editorial">
+            <input
+                type="checkbox"
+                name="destaque"
+                {% if artigo and artigo.destaque %}checked{% endif %}
+            >
+            Destacar na home
+        </label>
+    </div>
+
+    <textarea name="resumo" placeholder="Resumo curto">{{ artigo.resumo if artigo else '' }}</textarea>
+
+    <textarea
+        name="conteudo"
+        class="textarea-conteudo"
+        placeholder="Conteúdo do artigo. Separe parágrafos com uma linha em branco."
+    >{{ artigo.conteudo if artigo else '' }}</textarea>
+
+    <textarea
+        name="links_perfumes"
+        placeholder="Links dos perfumes citados na matéria, um por linha"
+    >{{ artigo.links_perfumes if artigo else '' }}</textarea>
+
+    <div class="campo-indicacoes">
+        <span class="secao-label">Perfumes do catálogo indicados no artigo</span>
+        <div class="lista-checkboxes">
+            {% for perfume in perfumes %}
+                <label>
+                    <input
+                        type="checkbox"
+                        name="perfumes"
+                        value="{{ perfume.id }}"
+                        {% if perfume.id in perfumes_selecionados %}checked{% endif %}
+                    >
+                    {{ perfume.nome }} · {{ perfume.marca }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button type="submit">Salvar artigo</button>
+</form>
+
+<a href="{{ url_for('admin') }}" class="link-voltar">Voltar para o painel</a>
+
+{% endblock %}
