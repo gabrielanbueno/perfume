@@ -1,44 +1,35 @@
-﻿<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aura Cítrica</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
-      rel="stylesheet"/>
-  </head>
-  <body>
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Aura Cítrica{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
     <nav class="topbar">
-      <div class="container topbar-conteudo">
-        <a href="{{ url_for('index') }}" class="topbar-logo">Aura Cítrica</a>
-        <div class="topbar-links">
-          <a href="{{ url_for('index') }}">Início</a>
-          <a href="{{ url_for('artigos') }}">Artigos</a>
-          <a href="{{ url_for('perfumes') }}">Perfumes</a>
-          <a href="{{ url_for('admin') }}">Admin</a>
+        <div class="container topbar-conteudo">
+            <a class="topbar-logo" href="{{ url_for('index') }}">Aura Cítrica</a>
+            <div class="topbar-links">
+                <a href="{{ url_for('index') }}">Início</a>
+                <a href="{{ url_for('artigos') }}">Artigos</a>
+                <a href="{{ url_for('perfumes') }}">Perfumes</a>
+                <a href="{{ url_for('admin') }}">Admin</a>
+            </div>
         </div>
-      </div>
     </nav>
 
-    <header class="header">
-      <div class="container hero">
-        <span class="tagline">Curadoria de perfumes perfeitos para o verão.</span>
-        <h1>Aura Cítrica</h1>
-        <p>Descubra fragrâncias leves, elegantes e versáteis para transformar sua rotina em uma experiência fresca e marcante.</p>
-      </div>
-    </header>
-
-    <main class="container">{% block content %} {% endblock %}</main>
+    {% block conteudo %}{% endblock %}
 
     <footer>
-      <p>&copy; 2024 Aura Cítrica. Todos os direitos reservados.</p>
+        <div class="container">
+            © {{ now.year if now is defined else 2025 }} Aura Cítrica — Blog editorial sobre fragrâncias
+        </div>
     </footer>
-  </body>
+
+</body>
 </html>
